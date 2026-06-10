@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">RestaurantFinder</string>
+
+    <!-- Login -->
+    <string name="hint_email">E-mail</string>
+    <string name="hint_password">Senha</string>
+    <string name="btn_login">Entrar</string>
+    <string name="btn_register">Cadastrar</string>
+    <string name="tv_no_account">Não tem conta? Cadastre-se</string>
+    <string name="tv_has_account">Já tem conta? Faça login</string>
+
+    <!-- Cadastro -->
+    <string name="hint_name">Nome completo</string>
+    <string name="title_register">Criar conta</string>
+
+    <!-- Lista de Restaurantes -->
+    <string name="title_restaurants">Restaurantes</string>
+    <string name="hint_search_city">Digite a cidade...</string>
+    <string name="btn_search">Buscar</string>
+    <string name="btn_logout">Sair</string>
+
+    <!-- Mensagens -->
+    <string name="msg_fill_all_fields">Preencha todos os campos</string>
+    <string name="msg_invalid_credentials">E-mail ou senha incorretos</string>
+    <string name="msg_email_exists">E-mail já cadastrado</string>
+    <string name="msg_register_success">Conta criada com sucesso!</string>
+</resources>
