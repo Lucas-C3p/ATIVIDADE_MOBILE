@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "244595282963",
+    "project_id": "restaurantfinder-6edc9",
+    "storage_bucket": "restaurantfinder-6edc9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244595282963:android:23eb7c0c8f790712371be6",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244595282963-vlivs567ssv7eehvjtsbm9g0dc66bo75.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "080414bf9798ffebe9800ee49014cf6922f983aa"
+          }
+        },
+        {
+          "client_id": "244595282963-aki9e2pal7pepslhgb3449q19oisdo45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU9aiG37RYH7fomVa1jDHrrKz5YEWiHys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244595282963-aki9e2pal7pepslhgb3449q19oisdo45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
