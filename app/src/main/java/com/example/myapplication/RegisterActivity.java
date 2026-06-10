@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,20 +9,22 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private TextInputEditText etName, etEmail, etPassword;
     private Button btnRegister;
     private TextView tvGoToLogin;
-    private DatabaseHelper databaseHelper;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        databaseHelper = new DatabaseHelper(this);
+        mAuth = FirebaseAuth.getInstance();
 
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
@@ -45,19 +46,33 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (databaseHelper.emailExists(email)) {
+                if (password.length() < 6) {
                     Toast.makeText(RegisterActivity.this,
-                            getString(R.string.msg_email_exists),
+                            "A senha deve ter pelo menos 6 caracteres",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (databaseHelper.registerUser(name, email, password)) {
-                    Toast.makeText(RegisterActivity.this,
-                            getString(R.string.msg_register_success),
-                            Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                // Salva o nome do usuário no Firebase
+                                UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(name)
+                                        .build();
+                                mAuth.getCurrentUser().updateProfile(profileUpdate)
+                                        .addOnCompleteListener(profileTask -> {
+                                            Toast.makeText(RegisterActivity.this,
+                                                    getString(R.string.msg_register_success),
+                                                    Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        });
+                            } else {
+                                String error = task.getException() != null ?
+                                        task.getException().getMessage() : "Erro ao cadastrar";
+                                Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_LONG).show();
+                            }
+                        });
             }
         });
 

@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +26,14 @@ public class RestaurantListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RestaurantAdapter adapter;
     private List<String> restaurantList;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_list);
+
+        mAuth = FirebaseAuth.getInstance();
 
         tvWelcome = findViewById(R.id.tvWelcome);
         etCity = findViewById(R.id.etCity);
@@ -36,10 +41,10 @@ public class RestaurantListActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.btnLogout);
         recyclerView = findViewById(R.id.recyclerView);
 
-        // Pega o nome do usuário passado pelo login
-        String userName = getIntent().getStringExtra("user_name");
-        if (userName != null && !userName.isEmpty()) {
-            tvWelcome.setText("Olá, " + userName + "!");
+        // Pega o nome do usuário do Firebase
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null && user.getDisplayName() != null && !user.getDisplayName().isEmpty()) {
+            tvWelcome.setText("Olá, " + user.getDisplayName() + "!");
         }
 
         // Configura RecyclerView
@@ -58,7 +63,6 @@ public class RestaurantListActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // Por enquanto lista fictícia — Google Places API vem depois
                 loadMockRestaurants(city);
             }
         });
@@ -66,6 +70,7 @@ public class RestaurantListActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mAuth.signOut();
                 Intent intent = new Intent(RestaurantListActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);

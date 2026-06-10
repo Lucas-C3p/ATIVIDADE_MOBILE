@@ -10,20 +10,29 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextInputEditText etEmail, etPassword;
     private Button btnLogin;
     private TextView tvGoToRegister;
-    private DatabaseHelper databaseHelper;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        databaseHelper = new DatabaseHelper(this);
+        mAuth = FirebaseAuth.getInstance();
+
+        // Se já está logado, vai direto para a lista
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            goToRestaurantList(currentUser.getDisplayName());
+            return;
+        }
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -43,17 +52,18 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (databaseHelper.loginUser(email, password)) {
-                    String name = databaseHelper.getUserName(email);
-                    Intent intent = new Intent(MainActivity.this, RestaurantListActivity.class);
-                    intent.putExtra("user_name", name);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(MainActivity.this,
-                            getString(R.string.msg_invalid_credentials),
-                            Toast.LENGTH_SHORT).show();
-                }
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                String name = user != null ? user.getDisplayName() : "";
+                                goToRestaurantList(name);
+                            } else {
+                                Toast.makeText(MainActivity.this,
+                                        getString(R.string.msg_invalid_credentials),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
 
@@ -63,5 +73,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, RegisterActivity.class));
             }
         });
+    }
+
+    private void goToRestaurantList(String name) {
+        Intent intent = new Intent(MainActivity.this, RestaurantListActivity.class);
+        intent.putExtra("user_name", name);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }
