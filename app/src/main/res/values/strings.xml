@@ -24,4 +24,7 @@
     <string name="msg_invalid_credentials">E-mail ou senha incorretos</string>
     <string name="msg_email_exists">E-mail já cadastrado</string>
     <string name="msg_register_success">Conta criada com sucesso!</string>
+
+    <!-- Google Places API -->
+    <string name="google_places_api_key">AIzaSyA-6Epn6gOuzcuCWtrhWf3pDMTbmcLJuVU</string>
 </resources>

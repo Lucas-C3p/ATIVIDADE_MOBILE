@@ -34,12 +34,13 @@
 
     </LinearLayout>
 
-    <!-- Busca -->
+    <!-- Busca por cidade -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
+        android:paddingBottom="0dp"
         android:gravity="center_vertical">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -66,6 +67,18 @@
             android:text="@string/btn_search"/>
 
     </LinearLayout>
+
+    <!-- Botão Geolocalização -->
+    <Button
+        android:id="@+id/btnLocation"
+        style="@style/AppButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="📍 Usar minha localização"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
 
     <!-- Lista -->
     <androidx.recyclerview.widget.RecyclerView

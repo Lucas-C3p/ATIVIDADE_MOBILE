@@ -38,9 +38,20 @@ dependencies {
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:34.0.0')
     implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-database'
 
     // Google Sign-In
     implementation 'com.google.android.gms:play-services-auth:21.2.0'
+
+    // Google Places API
+    implementation 'com.google.android.libraries.places:places:3.5.0'
+
+    // Location (Geolocalização)
+    implementation 'com.google.android.gms:play-services-location:21.3.0'
+
+    // ROOM
+    implementation 'androidx.room:room-runtime:2.6.1'
+    annotationProcessor 'androidx.room:room-compiler:2.6.1'
 
     testImplementation libs.junit
     androidTestImplementation libs.espresso.core

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "244595282963",
+    "firebase_url": "https://restaurantfinder-6edc9-default-rtdb.firebaseio.com",
     "project_id": "restaurantfinder-6edc9",
     "storage_bucket": "restaurantfinder-6edc9.firebasestorage.app"
   },
